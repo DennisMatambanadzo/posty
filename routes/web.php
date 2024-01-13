@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\UserPostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\DashboardController;
@@ -20,10 +21,12 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
+Route::get('/users/{user:username}/posts', [UserPostController::class,'index'])->name('users.posts');
 
 Route::get('/dashboard', [DashboardController::class,'index'])
     ->name('dashboard')
     ->middleware('auth');
+
 Route::get('/', function(){
     return view('home');
 })->name('home');
@@ -43,6 +46,7 @@ Route::get('/login', [LoginController::class,'index'])->name('login');
 Route::post('/login', [LoginController::class,'store']);
 
 Route::get('/posts', [PostController::class,'index'])->name('posts');
+Route::get('/posts/{post}', [PostController::class,'show'])->name('posts.show');
 Route::post('/posts', [PostController::class,'store']);
 Route::delete('/posts/{post}', [PostController::class,'destroy'])->name('posts.destroy');
 
